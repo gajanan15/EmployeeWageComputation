@@ -29,10 +29,19 @@ function getWorkingHours()
 	echo $EMPLOYEE_HRS
 }
 
+function calDailyWage()
+{
+	local EMPLOYEE_HRS=$1
+	wage=$(($EMPLOYEE_HRS*$EMPLOYEE_RATE_PER_HR))
+	echo $wage
+}
 while [[ $totalEmployeeHours -lt $MAX_HOURS_IN_MONTH && $totalWorkingDays -lt $NUMBER_OF_WORKING_DAYS ]]
 do
 	((totalWorkingDays++))
 	EMPLOYEE_HRS="$( getWorkingHours $((RANDOM%3)) )"
 	totalEmployeeHours=$(($totalEmployeeHours + $EMPLOYEE_HRS))
+	empDailyWage[$totalWorkingDays]="$( calDailyWage $EMPLOYEE_HRS)"
 done
-totalSalary=$(($totalEmployeeHours*$EMPLOYEE_RATE_PER_HR))
+totalSalary="$( calDailyWage $totalEmployeeHours)"
+echo "Daily Wage " ${empDailyWage[@]}
+
