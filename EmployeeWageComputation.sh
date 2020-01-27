@@ -9,7 +9,6 @@ NUMBER_OF_WORKING_DAYS=20
 MAX_HOURS_IN_MONTH=100
 
 #Variable
-
 totalEmployeeHours=0
 totalWorkingDays=0
 
