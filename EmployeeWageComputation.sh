@@ -13,6 +13,7 @@ MAX_HOURS_IN_MONTH=100
 totalEmployeeHours=0
 totalWorkingDays=0
 
+#Dictionary
 declare -A empDailyWage
 
 function getWorkingHours()
