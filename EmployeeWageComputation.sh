@@ -15,36 +15,34 @@ totalWorkingDays=0
 #Dictionary
 declare -A empDailyWage
 
-function getWorkingHours()
-{
+function getWorkingHours() {
 	case $1 in
 		$WORKING_FULLTIME)
-			EMPLOYEE_HRS=8
+			employeeHrs=8
 			;;
 		$WORKING_PARTTIME)
-			EMPLOYEE_HRS=4
+			employeeHrs=4
 			;;
 		*)
-			EMPLOYEE_HRS=0
+			employeeHrs=0
 			;;
 	esac
-	echo $EMPLOYEE_HRS
+	echo $employeeHrs
 }
 
-function calDailyWage()
-{
-	local EMPLOYEE_HRS=$1
-	wage=$(($EMPLOYEE_HRS*$EMPLOYEE_RATE_PER_HR))
-	echo $wage
+function calculateDailyWage() {
+	local employeeHours=$1
+	employeeWage=$(($employeeHours*$EMPLOYEE_RATE_PER_HR))
+	echo $employeeWage
 }
+
 while [[ $totalEmployeeHours -lt $MAX_HOURS_IN_MONTH && $totalWorkingDays -lt $NUMBER_OF_WORKING_DAYS ]]
 do
 	((totalWorkingDays++))
-	EMPLOYEE_HRS="$( getWorkingHours $((RANDOM%3)) )"
-	totalEmployeeHours=$(($totalEmployeeHours + $EMPLOYEE_HRS))
-	empDailyWage[Day" $totalWorkingDays"]="$( calDailyWage $EMPLOYEE_HRS)"
+	workingHours="$( getWorkingHours $((RANDOM%3)) )"
+	totalEmployeeHours=$(($totalEmployeeHours + $workingHours))
+	empDailyWage[Day" $totalWorkingDays"]="$( calculateDailyWage $workingHours)"
 done
-totalSalary="$( calDailyWage $totalEmployeeHours)"
+totalSalary="$( calculateDailyWage $totalEmployeeHours)"
 echo "Daily Wage " ${empDailyWage[@]}
-
 echo ${!empDailyWage[@]}
